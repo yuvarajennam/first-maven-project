@@ -9,23 +9,27 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
                 bat 'mvn clean package'
             }
         }
 
+        stage('Run Application') {
+            steps {
+                bat 'java -cp target\\classes com.yuvaraj.App'
+            }
+        }
     }
 
     post {
 
         success {
-            echo 'Maven build completed successfully! 🎉'
+            echo 'Maven build, tests and application run completed successfully! 🎉'
         }
 
         failure {
-            echo 'Maven build failed. Check the console output.'
+            echo 'Build failed. Check the console output.'
         }
-
     }
 }
